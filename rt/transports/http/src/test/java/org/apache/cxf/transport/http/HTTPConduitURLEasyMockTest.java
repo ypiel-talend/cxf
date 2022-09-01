@@ -215,7 +215,7 @@ public class HTTPConduitURLEasyMockTest {
     }
 
     @Test
-    public void _testSendHttpConnectionAllowedRedirectVerbs() throws Exception {
+    public void testSendHttpConnectionAllowedRedirectVerbs() throws Exception {
         control = EasyMock.createNiceControl();
         HTTPConduit conduit = setUpConduit(true, false, "POST");
         Message message = createMessage();
