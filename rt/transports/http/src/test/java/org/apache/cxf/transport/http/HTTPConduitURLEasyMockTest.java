@@ -215,6 +215,20 @@ public class HTTPConduitURLEasyMockTest {
     }
 
     @Test
+    public void _testSendHttpConnectionAllowedRedirectVerbs() throws Exception {
+        control = EasyMock.createNiceControl();
+        HTTPConduit conduit = setUpConduit(true, false, "POST");
+        Message message = createMessage();
+        message.put("http.redirect.allowed.verbs", "POST,PUT");
+        message.put(HTTPConduit.SET_HTTP_RESPONSE_MESSAGE, Boolean.TRUE);
+        conduit.prepare(message);
+        conduit.getClient().setAutoRedirect(true);
+        verifySentMessage(conduit, message, "POST");
+        assertEquals(HTTP_RESPONSE_MESSAGE, inMessage.get(HTTPConduit.HTTP_RESPONSE_MESSAGE));
+        finalVerify();
+    }
+
+    @Test
     public void testSendHttpGetConnectionAutoRedirect() throws Exception {
         control = EasyMock.createNiceControl();
         HTTPConduit conduit = setUpConduit(true, true, "GET");
